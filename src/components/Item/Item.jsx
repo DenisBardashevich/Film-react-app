@@ -1,34 +1,31 @@
 import './Item.css';
-import Info from '../Info/Info';
+import Time from '../Time/Time.jsx';
 import { useState } from 'react';
 
-function Item(props) {
+function Item (props) {
+    const {poster, title, year, genres, directors, actors, description, duration} = props;
+    const actorsSlice = actors.slice(0, -1);
+    
 
-    const[info, setInfo] = useState(false)
-
-    // Открываем информацию о стране
-    const handleOpenInfo  = () => {
-        setInfo(!info)
-    }
-
-	return (
-        <>
-            <div onClick={handleOpenInfo} className='item-container'>
-                <div className='flag-img'>
-                    <img className='image' src={props.img} alt={props.name} />
-                </div>
-                <p className='name'>{props.name}</p>
+    return(
+        <div className='item-container'>
+            <div className='poster-container'>
+                <img className='poster-img' src={poster} alt="Film" />
             </div>
-            {info && <Info 
-                area={props.area}
-                continents={props.continents}
-                region={props.region}
-                capital={props.capital}
-                handleCloseInfo={handleOpenInfo}
-            />}
-        </>
-	);
-
+            <div className='text-container'>
+                <div className='titel-time-container'>
+                    <a className='link-film' href="#">{title}</a>
+                    <Time duration={duration}/>
+                </div>
+                <p className='film-year-genres'>{year}, {genres}</p>
+                <p className='director'>Режиссёр: {directors}</p>
+                <p className='actor'>Актёры:</p> <p className='actor-list'>{actorsSlice.map(act => {
+                    return(`${act}, `)
+                })}{actors.slice(-1)}</p>
+                <p className='description-film'>{description}</p>
+            </div>
+        </div>
+    );
 };
 
 export default Item;
